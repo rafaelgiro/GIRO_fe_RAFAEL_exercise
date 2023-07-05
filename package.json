@@ -22,6 +22,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
+    "postinstall": "husky install",
     "tsc-check": "tsc --project tsconfig.json --pretty --noEmit",
     "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
