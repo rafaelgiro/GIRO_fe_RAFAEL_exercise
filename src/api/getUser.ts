@@ -5,14 +5,15 @@ import { ExtractFnReturnType, QueryConfig } from '@/api/react-query';
 
 import { User } from '../types';
 
-export const getUser = ({ userId }: { userId: string }): Promise<User> => {
+export const getUser = ({ userId }: { userId?: string }): Promise<User> => {
+  if (!userId) Promise.resolve({});
   return api(`/users/${userId}`);
 };
 
 type QueryFnType = typeof getUser;
 
 type UseUserOptions = {
-  userId: string;
+  userId?: string;
   config?: QueryConfig<QueryFnType>;
 };
 

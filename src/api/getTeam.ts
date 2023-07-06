@@ -6,7 +6,7 @@ import { ExtractFnReturnType, QueryConfig } from '@/api/react-query';
 import { TeamOverview } from '../types';
 
 export const getTeam = ({ teamId }: { teamId?: string }): Promise<TeamOverview> => {
-  if (!teamId) Promise.resolve([]);
+  if (!teamId) Promise.resolve({});
 
   return api(`/teams/${teamId}`);
 };

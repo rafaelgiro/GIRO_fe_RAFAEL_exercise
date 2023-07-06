@@ -16,8 +16,6 @@ export const TeamOverview = () => {
   const teamLead = query.data?.teamLeadId;
   const teamMembers = query.data?.teamMemberIds;
 
-  console.log(query.data);
-
   if (query.isLoading)
     return (
       <Layout title={title}>

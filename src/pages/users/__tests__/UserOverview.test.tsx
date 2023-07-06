@@ -1,19 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { customRender, screen } from '@/test/test-utils';
 
 import { UserOverview } from '../UserOverview';
 
-describe('UserOverview', () => {
-  it('should render UserOverview', () => {
-    const user = {
-      firstName: 'Test',
-      lastName: 'User',
-      displayName: 'userName',
-      location: 'location',
-    };
-    render(<UserOverview user={user} />);
+jest.mock('react-router-dom', () => ({
+  useLocation: () => ({}),
+  useNavigate: () => ({}),
+  useParams: () => ({
+    userId: '1',
+  }),
+}));
 
-    expect(screen.getByText('Test User')).toBeVisible();
-    expect(screen.getByText('userName')).toBeVisible();
-    expect(screen.getByText('location')).toBeVisible();
+describe('<UserOverview />', () => {
+  it('should render UserOverview', async () => {
+    customRender(<UserOverview />);
+
+    expect(await screen.findByRole('heading', { name: 'Name' })).toBeVisible();
+    expect(await screen.findByRole('heading', { name: 'Display Name' })).toBeVisible();
+    expect(await screen.findByRole('heading', { name: 'Location' })).toBeVisible();
   });
 });
