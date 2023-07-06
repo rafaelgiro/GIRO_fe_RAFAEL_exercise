@@ -1,22 +1,22 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-// import TeamOverview from '@/pages/TeamOverview';
-// import Teams from '@/pages/Teams';
-// import UserOverview from '@/pages/UserOverview';
+import TeamOverview from '@/pages/TeamOverview';
+import Teams from '@/pages/Teams';
+import UserOverview from '@/pages/UserOverview';
 
 export const AppRoutes = () => {
   const routes = [
     {
       path: '/',
-      element: <div>teams</div>,
+      element: <Teams />,
     },
     {
       path: '/team/:teamId',
-      element: <div>overview</div>,
+      element: <TeamOverview />,
     },
     {
       path: '/user/:useId',
-      element: <div>user</div>,
+      element: <UserOverview />,
     },
     { path: '*', element: <Navigate to="." /> },
   ];
