@@ -1,7 +1,7 @@
 import { Team } from '@/modules/teams/types';
 import { User } from '@/modules/users/types';
 
-import Card from '../Card';
+import { Card } from '../Card';
 import { Spinner } from '../Spinner';
 
 import { Container } from './styles';
@@ -30,16 +30,17 @@ const List = ({ items, hasNavigation = true, isLoading }: Props) => {
       {isLoading && <Spinner />}
       {!isLoading &&
         items?.map(({ url, id, columns, navigationProps }, index) => {
-          return (
-            <Card
-              key={`${id}-${index}`}
-              id={id}
-              columns={columns}
-              navigationProps={navigationProps}
-              hasNavigation={hasNavigation}
-              url={url}
-            />
-          );
+          return null;
+          // return (
+          //   <Card
+          //     key={`${id}-${index}`}
+          //     id={id}
+          //     columns={columns}
+          //     navigationProps={navigationProps}
+          //     hasNavigation={hasNavigation}
+          //     url={url}
+          //   />
+          // );
         })}
     </Container>
   );
