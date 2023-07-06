@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { CardList } from '../CardList';
 
-describe('List', () => {
+describe('<CardList />', () => {
   it.skip('should render spinner and not render items when it is loading', () => {
     render(<CardList isLoading columns={{ column: 'Column' }} items={[]} />);
 

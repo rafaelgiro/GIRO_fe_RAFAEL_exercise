@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { Spinner } from '..';
 
-describe('Spinner', () => {
+describe('<Spinner />', () => {
   it('should render an accessible spinner', () => {
     render(<Spinner />);
 

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Header } from '../Header';
 
-describe('Header', () => {
+describe('<Header />', () => {
   it('should render header', () => {
     render(<Header title="Header" />);
 
