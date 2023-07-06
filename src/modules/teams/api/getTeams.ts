@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { api } from '@/lib/api';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';

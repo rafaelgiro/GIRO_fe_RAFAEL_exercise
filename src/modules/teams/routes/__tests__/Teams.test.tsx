@@ -6,6 +6,12 @@ import { customRender, screen } from '@/test/test-utils';
 
 import { Teams } from '../Teams';
 
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
 const server = setupServer(
   rest.get(`${API_URL}/teams`, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json({}), ctx.delay('infinite'));

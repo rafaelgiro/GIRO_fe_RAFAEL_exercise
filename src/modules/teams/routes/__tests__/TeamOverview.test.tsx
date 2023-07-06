@@ -1,11 +1,25 @@
-import { customRender, screen } from '@/test/test-utils';
+import { customRender, screen, waitFor } from '@/test/test-utils';
 
 import { TeamOverview } from '../TeamOverview';
 
-describe('TeamOverview', async () => {
-  it('should render team overview users', async () => {
-    customRender(<TeamOverview teamId="1" />);
+jest.mock('react-router-dom', () => ({
+  useLocation: () => ({
+    state: {
+      teamName: 'Some Team',
+    },
+  }),
+  useNavigate: () => ({}),
+  useParams: () => ({
+    teamId: '1',
+  }),
+}));
 
-    expect(await screen.findAllByTestId('userData')).toHaveLength(4);
+describe('TeamOverview', () => {
+  it('should render team overview users', async () => {
+    customRender(<TeamOverview />);
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('link')).toHaveLength(4);
+    });
   });
 });

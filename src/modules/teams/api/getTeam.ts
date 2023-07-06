@@ -1,18 +1,20 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { api } from '@/lib/api';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
-import { Team } from '../types';
+import { TeamOverview } from '../types';
 
-export const getTeam = ({ teamId }: { teamId: string }): Promise<Team> => {
+export const getTeam = ({ teamId }: { teamId?: string }): Promise<TeamOverview> => {
+  if (!teamId) Promise.resolve([]);
+
   return api(`/teams/${teamId}`);
 };
 
 type QueryFnType = typeof getTeam;
 
 type UseTeamOptions = {
-  teamId: string;
+  teamId?: string;
   config?: QueryConfig<QueryFnType>;
 };
 

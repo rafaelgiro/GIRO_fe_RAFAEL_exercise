@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { api } from '@/lib/api';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -11,12 +11,12 @@ export const getUser = ({ userId }: { userId: string }): Promise<User> => {
 
 type QueryFnType = typeof getUser;
 
-type UseTeamOptions = {
+type UseUserOptions = {
   userId: string;
   config?: QueryConfig<QueryFnType>;
 };
 
-export const useTeam = ({ userId, config }: UseTeamOptions) => {
+export const useUser = ({ userId, config }: UseUserOptions) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: ['user', userId],

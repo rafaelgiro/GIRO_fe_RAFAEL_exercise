@@ -1,11 +1,5 @@
-import { Container } from '@/components/GlobalComponents';
-import Header from '@/components/Header';
+import { Layout } from '@/components/Layout';
 
 export const UserOverview = () => {
-  return (
-    <Container>
-      <Header title={`UseR`} />
-      User
-    </Container>
-  );
+  return <Layout title={`UseR`}>User</Layout>;
 };

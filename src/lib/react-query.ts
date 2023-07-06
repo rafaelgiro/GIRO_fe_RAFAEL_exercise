@@ -1,4 +1,9 @@
-import { QueryClient, UseQueryOptions, UseMutationOptions, DefaultOptions } from 'react-query';
+import {
+  QueryClient,
+  UseQueryOptions,
+  UseMutationOptions,
+  DefaultOptions,
+} from '@tanstack/react-query';
 import { PromiseValue } from 'type-fest';
 
 const queryConfig: DefaultOptions = {

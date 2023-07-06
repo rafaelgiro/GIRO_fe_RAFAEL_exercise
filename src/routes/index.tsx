@@ -11,7 +11,7 @@ export const AppRoutes = () => {
     },
     {
       path: '/team/:teamId',
-      element: <TeamOverview teamId="1" />,
+      element: <TeamOverview />,
     },
     {
       path: '/user/:useId',
