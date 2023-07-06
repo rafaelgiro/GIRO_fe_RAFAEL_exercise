@@ -1,9 +1,9 @@
 import { HeaderContainer, BackButton } from './styles';
 
-interface HeaderProps {
+export type HeaderProps = {
   title: string;
   onGoBackRequest?: () => void;
-}
+};
 
 export const Header = ({ title, onGoBackRequest }: HeaderProps) => {
   return (

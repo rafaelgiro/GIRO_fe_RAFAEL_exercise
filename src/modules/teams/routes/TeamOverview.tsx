@@ -1,5 +1,4 @@
-import { Container } from '@/components/GlobalComponents';
-import Header from '@/components/Header';
+import { Layout } from '@/components/Layout';
 
 import { useTeam } from '../api/getTeam';
 
@@ -12,12 +11,5 @@ export const TeamOverview = (props: TeamOverviewProps) => {
 
   const query = useTeam({ teamId });
 
-  console.log(query.data);
-
-  return (
-    <Container>
-      <Header title={`Team`} />
-      Team Overview
-    </Container>
-  );
+  return <Layout title={`Team ${query.data?.name}`}>Team Overview</Layout>;
 };

@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import { API_URL } from '@/config';
+import { customRender, screen } from '@/test/test-utils';
 
 import { Teams } from '../Teams';
 
@@ -17,7 +17,7 @@ describe('<Teams /> Loading state', () => {
   afterAll(() => server.close());
 
   it('should render spinner while loading', () => {
-    render(<Teams />);
+    customRender(<Teams />);
 
     const loadingComponent = screen.getByRole('alert');
 
@@ -29,8 +29,8 @@ describe('<Teams /> Loading state', () => {
 
 describe('<Teams /> Success state', () => {
   it('should render teams list', async () => {
-    render(<Teams />);
+    customRender(<Teams />);
 
-    expect(await screen.findAllByTestId('teamContainer')).toHaveLength(3);
+    expect(await screen.findAllByRole('link')).toHaveLength(3);
   });
 });

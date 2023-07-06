@@ -1,6 +1,5 @@
 import { CardList } from '@/components/CardList';
-import { Container } from '@/components/GlobalComponents';
-import Header from '@/components/Header';
+import { Layout } from '@/components/Layout';
 
 import { useTeams } from '../api/getTeams';
 
@@ -10,14 +9,13 @@ export const Teams = () => {
   const columns = { name: 'Name' };
 
   return (
-    <Container>
-      <Header title="Teams" showBackButton={false} />
+    <Layout title="Teams">
       <CardList
         items={query.data || []}
         columns={columns}
         isLoading={query.isLoading}
         onNavigationRequest={console.log}
       />
-    </Container>
+    </Layout>
   );
 };
