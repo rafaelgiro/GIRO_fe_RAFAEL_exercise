@@ -5,6 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Normalize } from './styles';
 
+if (process.env.NODE_ENV === 'development') {
+  // Disabled to follow MSW docs: https://mswjs.io/docs/getting-started/integrate/browser
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { worker } = require('./mocks/browser');
+  worker.start();
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Normalize />
