@@ -1,20 +1,12 @@
 import styled from 'styled-components';
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   height: 100px;
   margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const Title = styled.h1``;
-
-export const NavigationHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const BackButton = styled.button`
