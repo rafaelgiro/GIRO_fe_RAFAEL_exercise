@@ -1,10 +1,27 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useTeam } from '@/api/getTeam';
+import { useUser } from '@/api/getUser';
 import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
 import { Spinner } from '@/components/Spinner';
 import { UserCard } from '@/components/UserCard';
+
+type TeamMemberProps = {
+  userId: string;
+};
+
+const TeamMember = ({ userId }: TeamMemberProps) => {
+  const navigate = useNavigate();
+  const query = useUser({ userId });
+  if (query.isLoading || !query.data) return <Spinner />;
+
+  function handleNavigation() {
+    navigate(`/user/${userId}`, { state: { user: query.data } });
+  }
+
+  return <UserCard user={query.data} onRequestUserNavigate={handleNavigation} />;
+};
 
 export const TeamOverview = () => {
   const { teamId } = useParams();
@@ -25,11 +42,11 @@ export const TeamOverview = () => {
 
   return (
     <Layout title={title}>
-      {teamLead && <UserCard userId={teamLead} />}
+      {teamLead && <TeamMember userId={teamLead} />}
       {teamMembers && (
         <CardList isLoading={false}>
           {teamMembers.map((userId) => (
-            <UserCard key={userId} userId={userId} />
+            <TeamMember key={userId} userId={userId} />
           ))}
         </CardList>
       )}

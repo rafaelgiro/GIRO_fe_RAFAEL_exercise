@@ -22,9 +22,5 @@ export const UserOverview = () => {
       </Layout>
     );
 
-  return (
-    <Layout title={title}>
-      {userId && <UserCard userId={userId} initialUser={initialUser} />}
-    </Layout>
-  );
+  return <Layout title={title}>{userId && <UserCard user={initialUser || query.data} />}</Layout>;
 };
