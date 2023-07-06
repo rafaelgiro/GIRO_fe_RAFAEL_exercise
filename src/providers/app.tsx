@@ -2,7 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { queryClient } from '@/lib/react-query';
+import { queryClient } from '@/api/react-query';
 
 type AppProviderProps = {
   children: ReactNode;

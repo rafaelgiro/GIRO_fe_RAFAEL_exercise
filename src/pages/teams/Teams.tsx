@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useTeams } from '@/api/getTeams';
 import { Card } from '@/components/Card';
 import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
-
-import { useTeams } from '../api/getTeams';
-import { Team } from '../types';
+import { Team } from '@/types';
 
 export const Teams = () => {
   const query = useTeams();

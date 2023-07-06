@@ -1,11 +1,10 @@
 import { useLocation, useParams } from 'react-router-dom';
 
+import { useTeam } from '@/api/getTeam';
 import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
 import { Spinner } from '@/components/Spinner';
-import { UserCard } from '@/modules/users/components/UserCard';
-
-import { useTeam } from '../api/getTeam';
+import { UserCard } from '@/components/UserCard';
 
 export const TeamOverview = () => {
   const { teamId } = useParams();

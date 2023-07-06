@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from '@/lib/api';
-import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
+import { api } from '@/api';
+import { ExtractFnReturnType, QueryConfig } from '@/api/react-query';
 
 import { User } from '../types';
 
