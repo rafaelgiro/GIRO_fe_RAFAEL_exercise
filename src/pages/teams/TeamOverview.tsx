@@ -26,6 +26,7 @@ const TeamMember = ({ userId }: TeamMemberProps) => {
 export const TeamOverview = () => {
   const { teamId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const title = location.state?.teamName ? `Team ${location.state.teamName}` : 'Team overview';
 
   const query = useTeam({ teamId });
@@ -41,7 +42,7 @@ export const TeamOverview = () => {
     );
 
   return (
-    <Layout title={title}>
+    <Layout title={title} onGoBackRequest={() => navigate(-1)}>
       {teamLead && <TeamMember userId={teamLead} />}
       {teamMembers && (
         <CardList isLoading={false}>
