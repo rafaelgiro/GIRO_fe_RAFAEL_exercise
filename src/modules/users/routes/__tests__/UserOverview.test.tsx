@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import UserOverview from '../UserOverview';
+import { UserOverview } from '../UserOverview';
 
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({

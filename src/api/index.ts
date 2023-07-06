@@ -1,5 +1,6 @@
 import { API_URL } from '@/config';
-import { Teams, TeamOverview, UserData } from '@/types';
+import { TeamOverview, Teams } from '@/modules/teams/types';
+import { UserData } from '@/modules/users/types';
 
 const getData = async (path = '') => {
   const url = `${API_URL}/${path}`;

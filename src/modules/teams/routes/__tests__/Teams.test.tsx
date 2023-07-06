@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 
-import * as API from '../../api';
-import Teams from '../Teams';
+import * as API from '@/api';
+
+import { Teams } from '../Teams';
 
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({

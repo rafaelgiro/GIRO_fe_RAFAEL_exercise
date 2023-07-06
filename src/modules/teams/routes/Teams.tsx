@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { ListItem, Teams as TeamsList } from '@/types';
+import { getTeams as fetchTeams } from '@/api';
+import { Container } from '@/components/GlobalComponents';
+import Header from '@/components/Header';
+import List, { ListItem } from '@/components/List';
 
-import { getTeams as fetchTeams } from '../api';
-import { Container } from '../components/GlobalComponents';
-import Header from '../components/Header';
-import List from '../components/List';
+import { Teams as TeamsList } from '../types';
 
 const MapT = (teams: TeamsList[]) => {
   return teams.map((team) => {
@@ -24,7 +24,7 @@ const MapT = (teams: TeamsList[]) => {
   });
 };
 
-const Teams = () => {
+export const Teams = () => {
   const [teams, setTeams] = React.useState<any>([]);
   const [isLoading, setIsLoading] = React.useState<any>(true);
 
@@ -44,5 +44,3 @@ const Teams = () => {
     </Container>
   );
 };
-
-export default Teams;

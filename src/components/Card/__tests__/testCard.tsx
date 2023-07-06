@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { Teams } from '@/types';
+import { Teams } from '@/modules/teams/types';
 
 import Card from '..';
 

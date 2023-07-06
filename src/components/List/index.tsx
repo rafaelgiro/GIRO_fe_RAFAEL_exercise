@@ -1,9 +1,22 @@
-import { ListItem } from '@/types';
+import { Teams } from '@/modules/teams/types';
+import { UserData } from '@/modules/users/types';
 
 import Card from '../Card';
 import { Spinner } from '../Spinner';
 
 import { Container } from './styles';
+
+export interface ListItemColumn {
+  key: string;
+  value: string;
+}
+
+export interface ListItem {
+  id: string;
+  url?: string;
+  columns: Array<ListItemColumn>;
+  navigationProps?: UserData | Teams;
+}
 
 interface Props {
   items?: ListItem[];

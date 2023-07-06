@@ -1,8 +1,7 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import TeamOverview from '@/pages/TeamOverview';
-import Teams from '@/pages/Teams';
-import UserOverview from '@/pages/UserOverview';
+import { TeamOverview, Teams } from '@/modules/teams';
+import { UserOverview } from '@/modules/users';
 
 export const AppRoutes = () => {
   const routes = [

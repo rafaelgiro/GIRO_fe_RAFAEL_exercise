@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Teams, UserData } from '@/types';
+import { Teams } from '@/modules/teams/types';
+import { UserData } from '@/modules/users/types';
 
 import { Container } from './styles';
 
