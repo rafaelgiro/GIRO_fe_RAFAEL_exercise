@@ -13,7 +13,7 @@ export const usersHandlers = [
         id: userId,
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        displayName: faker.person.fullName(),
+        displayName: faker.internet.userName(),
         location: faker.location.country(),
         avatar: faker.image.avatar(),
       })

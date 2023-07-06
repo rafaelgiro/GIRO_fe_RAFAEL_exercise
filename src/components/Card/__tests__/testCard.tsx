@@ -13,54 +13,55 @@ jest.mock('react-router-dom', () => ({
 
 describe('Card', () => {
   it('should render card with single column', () => {
-    const columns = [{ key: 'columnKey', value: 'columnValue' }];
-    render(<Card columns={columns} />);
+    const columns = [{ key: 'columnKey', title: 'Column Key' }];
+    const values = [{ columnKey: 'Column Value' }];
+    render(<Card columns={columns} values={values} />);
 
-    expect(screen.getByText('columnKey')).toBeInTheDocument();
-    expect(screen.getByText('columnValue')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Column Key' })).toBeVisible();
+    expect(screen.getByText('Column Value')).toBeVisible();
   });
 
   it('should render card with multiple columns', () => {
     const columns = [
-      { key: 'columnKey1', value: 'columnValue1' },
-      { key: 'columnKey2', value: 'columnValue2' },
-      { key: 'columnKey3', value: 'columnValue3' },
-      { key: 'columnKey4', value: '' },
+      { key: 'columnKey1', title: 'Column 1' },
+      { key: 'columnKey2', title: 'Column 2' },
+      { key: 'columnKey3', title: 'Column 3' },
+      { key: 'columnKey4', title: '' },
     ];
-    render(<Card columns={columns} />);
+    const values = [
+      { columnKey1: 'First Value' },
+      { columnKey2: 'Second Value' },
+      { columnKey3: 'Third Value' },
+      { columnKey4: 'Fourth Value' },
+    ];
 
-    expect(screen.getByText('columnKey1')).toBeInTheDocument();
-    expect(screen.getByText('columnValue1')).toBeInTheDocument();
-    expect(screen.getByText('columnKey2')).toBeInTheDocument();
-    expect(screen.getByText('columnValue2')).toBeInTheDocument();
-    expect(screen.getByText('columnKey3')).toBeInTheDocument();
-    expect(screen.getByText('columnValue3')).toBeInTheDocument();
-    expect(screen.getByText('columnKey4')).toBeInTheDocument();
+    render(<Card columns={columns} values={values} />);
+
+    expect(screen.getAllByRole('heading', { name: /Column / })).toHaveLength(3);
+    expect(screen.getAllByText(/ Value/)).toHaveLength(4);
   });
 
   it('should navigate when card is clicked and navigation is enabled', () => {
-    const navProps = {
-      id: '1',
-      name: 'Team 1',
-    } as Teams;
-    render(
-      <Card
-        columns={[{ key: 'columnKey', value: 'columnValue' }]}
-        url="path"
-        navigationProps={navProps}
-      />
-    );
+    const columns = [{ key: 'columnKey', title: 'Column Key' }];
+    const values = [{ columnKey: 'Column Value' }];
+    const onNavigationResquest = jest.fn();
 
-    fireEvent.click(screen.getByText('columnKey'));
+    render(<Card columns={columns} values={values} onNavigationRequest={onNavigationResquest} />);
 
-    expect(mockUseNavigate).toHaveBeenCalledWith('path', { state: navProps });
+    fireEvent.click(screen.getByRole('link', { name: 'Column Key: Column Value' }));
+
+    expect(onNavigationResquest).toHaveBeenCalled();
   });
 
   it('should not navigate when card is clicked and navigation is disabled', () => {
-    render(<Card columns={[{ key: 'columnKey', value: 'columnValue' }]} hasNavigation={false} />);
+    const columns = [{ key: 'columnKey', title: 'Column Key' }];
+    const values = [{ columnKey: 'Column Value' }];
+    const onNavigationResquest = jest.fn();
 
-    fireEvent.click(screen.getByText('columnKey'));
+    render(<Card columns={columns} values={values} />);
 
-    expect(mockUseNavigate).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByText('Column Key: Column Value'));
+
+    expect(onNavigationResquest).not.toHaveBeenCalled();
   });
 });

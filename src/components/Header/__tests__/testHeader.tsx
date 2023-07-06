@@ -1,51 +1,32 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
 
 import Header from '..';
 
-const mockUseNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockUseNavigate,
-}));
-
 describe('Header', () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-
   it('should render header', () => {
     render(<Header title="Header" />);
 
-    expect(screen.getByText('Header')).toBeInTheDocument();
+    expect(screen.getByRole('banner', { name: 'Header' })).toBeVisible();
   });
 
   it('should render back button in header', () => {
-    render(<Header title="Header" showBackButton />);
+    render(<Header title="Header" onGoBackRequest={jest.fn()} />);
 
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Go Back' })).toBeVisible();
   });
 
   it('should not render back button in header', () => {
-    render(<Header title="Header" showBackButton={false} />);
+    render(<Header title="Header" />);
 
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Go Back' })).not.toBeInTheDocument();
   });
 
   it('should navigate back when back button is clicked', () => {
-    render(<Header title="Header" showBackButton />);
+    const onGoBackRequest = jest.fn();
+    render(<Header title="Header" onGoBackRequest={onGoBackRequest} />);
 
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Go Back' }));
 
-    expect(mockUseNavigate).toHaveBeenCalled();
+    expect(onGoBackRequest).toHaveBeenCalled();
   });
 });

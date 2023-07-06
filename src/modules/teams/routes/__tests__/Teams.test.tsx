@@ -1,55 +1,36 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 
-import * as API from '@/api';
+import { API_URL } from '@/config';
 
 import { Teams } from '../Teams';
 
-jest.mock('react-router-dom', () => ({
-  useLocation: () => ({
-    state: {
-      firstName: 'Test',
-      lastName: 'User',
-      displayName: 'userName',
-      location: 'location',
-    },
-  }),
-  useNavigate: () => ({}),
-}));
+const server = setupServer(
+  rest.get(`${API_URL}/teams`, (_, res, ctx) => {
+    return res(ctx.status(200), ctx.json({}), ctx.delay('infinite'));
+  })
+);
 
-describe('Teams', () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
+describe('<Teams /> Loading state', () => {
+  beforeAll(() => server.listen());
+  afterAll(() => server.close());
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-
-  it('should render spinner while loading', async () => {
-    // TODO - Add code for this test
-  });
-
-  it('should render teams list', async () => {
-    jest.spyOn(API, 'getTeams').mockResolvedValue([
-      {
-        id: '1',
-        name: 'Team1',
-      },
-      {
-        id: '2',
-        name: 'Team2',
-      },
-    ]);
-
+  it('should render spinner while loading', () => {
     render(<Teams />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Team1')).toBeInTheDocument();
-    });
-    expect(screen.getByText('Team2')).toBeInTheDocument();
+    const loadingComponent = screen.getByRole('alert');
+
+    expect(loadingComponent).toBeVisible();
+    expect(loadingComponent).toHaveAttribute('aria-live', 'polite');
+    expect(loadingComponent).toHaveAttribute('aria-busy', 'true');
+  });
+});
+
+describe('<Teams /> Success state', () => {
+  it('should render teams list', async () => {
+    render(<Teams />);
+
+    expect(await screen.findAllByTestId('teamContainer')).toHaveLength(3);
   });
 });

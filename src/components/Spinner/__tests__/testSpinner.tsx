@@ -3,9 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { Spinner } from '..';
 
 describe('Spinner', () => {
-  it('should render spinner', () => {
+  it('should render an accessible spinner', () => {
     render(<Spinner />);
 
-    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+    const spinner = screen.getByRole('alert');
+
+    expect(spinner).toBeVisible();
+    expect(spinner).toHaveAttribute('aria-live', 'polite');
+    expect(spinner).toHaveAttribute('aria-busy', 'true');
   });
 });
