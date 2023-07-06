@@ -1,95 +1,23 @@
-import * as React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-
-import { getTeamOverview, getUserData } from '@/api';
-import Card from '@/components/Card';
 import { Container } from '@/components/GlobalComponents';
 import Header from '@/components/Header';
-import List, { ListItem } from '@/components/List';
-import { UserData } from '@/modules/users/types';
 
-const mapArray = (users: UserData[]) => {
-  return users.map((u) => {
-    const columns = [
-      {
-        key: 'Name',
-        value: `${u.firstName} ${u.lastName}`,
-      },
-      {
-        key: 'Display Name',
-        value: u.displayName,
-      },
-      {
-        key: 'Location',
-        value: u.location,
-      },
-    ];
-    return {
-      id: u.id,
-      url: `/user/${u.id}`,
-      columns,
-      navigationProps: u,
-    };
-  }) as ListItem[];
+import { useTeam } from '../api/getTeam';
+
+type TeamOverviewProps = {
+  teamId: string;
 };
 
-const mapTLead = (tlead: UserData) => {
-  const columns = [
-    {
-      key: 'Team Lead',
-      value: '',
-    },
-    {
-      key: 'Name',
-      value: `${tlead.firstName} ${tlead.lastName}`,
-    },
-    {
-      key: 'Display Name',
-      value: tlead.displayName,
-    },
-    {
-      key: 'Location',
-      value: tlead.location,
-    },
-  ];
-  return <Card columns={columns} url={`/user/${tlead.id}`} navigationProps={tlead} />;
-};
+export const TeamOverview = (props: TeamOverviewProps) => {
+  const { teamId } = props;
 
-interface PageState {
-  teamLead?: UserData;
-  teamMembers?: UserData[];
-}
+  const query = useTeam({ teamId });
 
-export const TeamOverview = () => {
-  const location = useLocation();
-  const { teamId } = useParams();
-  const [pageData, setPageData] = React.useState<PageState>({});
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
-  React.useEffect(() => {
-    const getTeamUsers = async () => {
-      const { teamLeadId, teamMemberIds = [] } = await getTeamOverview(teamId || '');
-      const teamLead = await getUserData(teamLeadId);
-
-      const teamMembers = [];
-      for (const teamMemberId of teamMemberIds) {
-        const data = await getUserData(teamMemberId);
-        teamMembers.push(data);
-      }
-      setPageData({
-        teamLead,
-        teamMembers,
-      });
-      setIsLoading(false);
-    };
-    getTeamUsers();
-  }, [teamId]);
+  console.log(query.data);
 
   return (
     <Container>
-      <Header title={`Team ${location.state.name}`} />
-      {!isLoading && pageData.teamLead && mapTLead(pageData.teamLead)}
-      <List items={mapArray(pageData?.teamMembers ?? [])} isLoading={isLoading} />
+      <Header title={`Team`} />
+      Team Overview
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Teams } from '@/modules/teams/types';
-import { UserData } from '@/modules/users/types';
+import { Team } from '@/modules/teams/types';
+import { User } from '@/modules/users/types';
 
 import { Container } from './styles';
 
@@ -13,7 +13,7 @@ interface Props {
     value: string;
   }>;
   hasNavigation?: boolean;
-  navigationProps?: UserData | Teams | null;
+  navigationProps?: User | Team | null;
 }
 
 const Card = ({

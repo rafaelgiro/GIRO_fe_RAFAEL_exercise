@@ -1,5 +1,5 @@
-import { Teams } from '@/modules/teams/types';
-import { UserData } from '@/modules/users/types';
+import { Team } from '@/modules/teams/types';
+import { User } from '@/modules/users/types';
 
 import Card from '../Card';
 import { Spinner } from '../Spinner';
@@ -15,7 +15,7 @@ export interface ListItem {
   id: string;
   url?: string;
   columns: Array<ListItemColumn>;
-  navigationProps?: UserData | Teams;
+  navigationProps?: User | Team;
 }
 
 interface Props {

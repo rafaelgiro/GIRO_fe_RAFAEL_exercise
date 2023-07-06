@@ -11,7 +11,7 @@ export async function api(path: string, options: RequestInit = {}): Promise<any>
   const fetchOptions: RequestInit = { ...defaultOptions, ...options };
 
   try {
-    const response = await fetch(`${API_URL}/${path}`, fetchOptions);
+    const response = await fetch(`${API_URL}${path}`, fetchOptions);
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
