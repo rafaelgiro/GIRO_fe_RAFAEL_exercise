@@ -1,20 +1,20 @@
 import { useMemo } from 'react';
 
-import { Container } from './styles';
+import { CardContainer } from './styles';
 
 type CardProps = {
   columns: Record<string, string>;
   values: Record<string, any>;
-  onNavigationRequest?: () => void;
+  onNavigationRequest?: (item: CardProps['values']) => void;
 };
 
-export const Card = ({ columns, values, onNavigationRequest }: CardProps): JSX.Element => {
+export const Card = ({ columns, values, onNavigationRequest }: CardProps) => {
   const data = useMemo(() => Object.entries(values), [values]);
 
   return (
-    <Container
+    <CardContainer
       role={onNavigationRequest ? 'link' : 'presentation'}
-      onClick={onNavigationRequest}
+      onClick={() => onNavigationRequest?.(values)}
       hasNavigation={!!onNavigationRequest}
       data-testid="cardContainer"
     >
@@ -30,6 +30,6 @@ export const Card = ({ columns, values, onNavigationRequest }: CardProps): JSX.E
 
         return null;
       })}
-    </Container>
+    </CardContainer>
   );
 };

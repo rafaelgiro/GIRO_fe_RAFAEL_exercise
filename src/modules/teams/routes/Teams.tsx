@@ -1,4 +1,4 @@
-import { Card } from '@/components/Card';
+import { CardList } from '@/components/CardList';
 import { Container } from '@/components/GlobalComponents';
 import Header from '@/components/Header';
 
@@ -12,9 +12,12 @@ export const Teams = () => {
   return (
     <Container>
       <Header title="Teams" showBackButton={false} />
-      {(query.data || []).map((team) => (
-        <Card key={team.id} columns={columns} values={team} />
-      ))}
+      <CardList
+        items={query.data || []}
+        columns={columns}
+        isLoading={query.isLoading}
+        onNavigationRequest={console.log}
+      />
     </Container>
   );
 };
