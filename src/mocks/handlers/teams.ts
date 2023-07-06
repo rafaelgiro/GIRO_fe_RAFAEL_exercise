@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { rest } from 'msw';
 
+import { API_URL } from '@/config';
+
 export const teamsHandlers = [
-  rest.get('/teams', (_, res, ctx) => {
+  rest.get(`${API_URL}/teams`, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json([
@@ -22,7 +24,7 @@ export const teamsHandlers = [
     );
   }),
 
-  rest.get('/teams/:teamId', (req, res, ctx) => {
+  rest.get(`${API_URL}/teams/:teamId`, (req, res, ctx) => {
     const { teamId } = req.params;
 
     return res(

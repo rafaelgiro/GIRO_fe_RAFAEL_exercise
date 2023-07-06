@@ -1,7 +1,8 @@
+import { API_URL } from '@/config';
 import { Teams, TeamOverview, UserData } from '@/types';
 
 const getData = async (path = '') => {
-  const url = `/${path}`;
+  const url = `${API_URL}/${path}`;
   const res = await fetch(url);
   const json = await res.json();
 

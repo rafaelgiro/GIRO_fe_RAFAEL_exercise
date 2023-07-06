@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { rest } from 'msw';
 
+import { API_URL } from '@/config';
+
 export const usersHandlers = [
-  rest.get('/users/:userId', (req, res, ctx) => {
+  rest.get(`${API_URL}/users/:userId`, (req, res, ctx) => {
     const { userId } = req.params;
 
     return res(
