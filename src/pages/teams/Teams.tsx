@@ -4,11 +4,17 @@ import { useTeams } from '@/api/getTeams';
 import { Card } from '@/components/Card';
 import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
+import { useSearch } from '@/hooks/useSearch';
 import { Team } from '@/types';
 
 export const Teams = () => {
-  const query = useTeams();
+  const { data, isLoading } = useTeams();
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useSearch();
+
+  const filteredData = searchValue
+    ? data?.filter((team) => team.name.toLowerCase().includes(searchValue.toLowerCase()))
+    : data;
 
   const columns = { name: 'Name' };
 
@@ -17,9 +23,13 @@ export const Teams = () => {
   }
 
   return (
-    <Layout title="Teams">
-      <CardList isLoading={query.isLoading}>
-        {query.data?.map((card) => (
+    <Layout
+      title="Teams"
+      onSearchButtonClick={setSearchValue}
+      initialSearchValue={searchValue || undefined}
+    >
+      <CardList isLoading={isLoading}>
+        {filteredData?.map((card) => (
           <Card
             key={card.id}
             values={card}

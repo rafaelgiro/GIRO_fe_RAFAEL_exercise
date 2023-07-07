@@ -7,9 +7,11 @@ import { customRender, screen } from '@/test/test-utils';
 import { Teams } from '../Teams';
 
 const mockedUsedNavigate = jest.fn();
+
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUsedNavigate,
+  useLocation: () => ({}),
+  useSearchParams: () => [new URLSearchParams()],
 }));
 
 const server = setupServer(

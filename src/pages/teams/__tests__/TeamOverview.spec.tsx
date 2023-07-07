@@ -12,6 +12,7 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({
     teamId: '1',
   }),
+  useSearchParams: () => [new URLSearchParams()],
 }));
 
 describe('TeamOverview', () => {

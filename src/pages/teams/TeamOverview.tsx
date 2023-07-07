@@ -6,35 +6,42 @@ import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
 import { Spinner } from '@/components/Spinner';
 import { UserCard } from '@/components/UserCard';
+import { useSearch } from '@/hooks/useSearch';
 
 type TeamMemberProps = {
   userId: string;
+  searchValue: string | null;
 };
 
-const TeamMember = ({ userId }: TeamMemberProps) => {
+const TeamMember = ({ userId, searchValue }: TeamMemberProps) => {
   const navigate = useNavigate();
-  const query = useUser({ userId });
-  if (query.isLoading || !query.data) return <Spinner />;
+  const { data, isLoading } = useUser({ userId });
+  const values = Object.values(data || {});
+  const searchExists = values.find((v) => v.toLowerCase().includes(searchValue?.toLowerCase()));
 
   function handleNavigation() {
-    navigate(`/user/${userId}`, { state: { user: query.data } });
+    navigate(`/user/${userId}`, { state: { user: data } });
   }
 
-  return <UserCard user={query.data} onRequestUserNavigate={handleNavigation} />;
+  console.log(searchExists, searchValue, values);
+
+  if (isLoading || !data) return <Spinner />;
+  if (!searchExists && searchValue) return null;
+  return <UserCard user={data} onRequestUserNavigate={handleNavigation} />;
 };
 
 export const TeamOverview = () => {
   const { teamId } = useParams();
+  const { data, isLoading } = useTeam({ teamId });
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useSearch();
   const title = location.state?.teamName ? `Team ${location.state.teamName}` : 'Team overview';
 
-  const query = useTeam({ teamId });
+  const teamLead = data?.teamLeadId;
+  const teamMembers = data?.teamMemberIds;
 
-  const teamLead = query.data?.teamLeadId;
-  const teamMembers = query.data?.teamMemberIds;
-
-  if (query.isLoading)
+  if (isLoading)
     return (
       <Layout title={title}>
         <Spinner />
@@ -42,12 +49,17 @@ export const TeamOverview = () => {
     );
 
   return (
-    <Layout title={title} onGoBackRequest={() => navigate(-1)}>
-      {teamLead && <TeamMember userId={teamLead} />}
+    <Layout
+      title={title}
+      onGoBackRequest={() => navigate(-1)}
+      onSearchButtonClick={setSearchValue}
+      initialSearchValue={searchValue || undefined}
+    >
+      {teamLead && <TeamMember userId={teamLead} searchValue={searchValue} />}
       {teamMembers && (
         <CardList isLoading={false}>
           {teamMembers.map((userId) => (
-            <TeamMember key={userId} userId={userId} />
+            <TeamMember key={userId} userId={userId} searchValue={searchValue} />
           ))}
         </CardList>
       )}

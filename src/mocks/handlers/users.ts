@@ -15,7 +15,7 @@ export const usersHandlers = [
         lastName: faker.person.lastName(),
         displayName: faker.internet.userName(),
         location: faker.location.country(),
-        avatar: faker.image.avatar(),
+        avatar: '',
       })
     );
   }),
