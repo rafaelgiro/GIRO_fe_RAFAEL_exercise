@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/api';
 import { ExtractFnReturnType, QueryConfig } from '@/api/react-query';
 
-import { User } from '../types';
+import { User } from '../@types';
 
 export const getUser = ({ userId }: { userId?: string }): Promise<User> => {
   if (!userId) Promise.resolve({});

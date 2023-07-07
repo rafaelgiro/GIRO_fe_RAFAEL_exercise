@@ -1,7 +1,8 @@
 import { rest } from 'msw';
-import { setupServer } from 'msw/node';
+import ReactRouterDom from 'react-router-dom';
 
 import { API_URL } from '@/config';
+import { server } from '@/mocks/server';
 import { customRender, screen } from '@/test/test-utils';
 
 import { Teams } from '../Teams';
@@ -14,19 +15,14 @@ jest.mock('react-router-dom', () => ({
   useSearchParams: () => [new URLSearchParams()],
 }));
 
-const server = setupServer(
-  rest.get(`${API_URL}/teams`, (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json({}), ctx.delay('infinite'));
-  })
-);
-
 describe('<Teams /> Loading state', () => {
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
-
   it('should render spinner while loading', () => {
     customRender(<Teams />);
-
+    server.use(
+      rest.get(`${API_URL}/teams`, (_, res, ctx) => {
+        return res.once(ctx.status(200), ctx.json({}), ctx.delay('infinite'));
+      })
+    );
     const loadingComponent = screen.getByRole('alert');
 
     expect(loadingComponent).toBeVisible();
@@ -40,5 +36,40 @@ describe('<Teams /> Success state', () => {
     customRender(<Teams />);
 
     expect(await screen.findAllByRole('link')).toHaveLength(3);
+  });
+});
+
+describe('<Teams /> Search by name', () => {
+  beforeEach(() => {
+    jest
+      .spyOn(ReactRouterDom, 'useSearchParams')
+      .mockReturnValue([new URLSearchParams({ search: 'games' }), jest.fn()]);
+  });
+
+  it('should display only one team', async () => {
+    server.use(
+      rest.get(`${API_URL}/teams`, (_, res, ctx) => {
+        return res.once(
+          ctx.json([
+            {
+              id: '1',
+              name: 'Games',
+            },
+            {
+              id: '2',
+              name: 'Technology',
+            },
+            {
+              id: '3',
+              name: 'Garden',
+            },
+          ])
+        );
+      })
+    );
+
+    customRender(<Teams />);
+
+    expect(await screen.findByRole('link')).toBeVisible();
   });
 });

@@ -11,9 +11,10 @@ import { useSearch } from '@/hooks/useSearch';
 type TeamMemberProps = {
   userId: string;
   searchValue: string | null;
+  isLead?: boolean;
 };
 
-const TeamMember = ({ userId, searchValue }: TeamMemberProps) => {
+const TeamMember = ({ userId, searchValue, isLead }: TeamMemberProps) => {
   const navigate = useNavigate();
   const { data, isLoading } = useUser({ userId });
   const values = Object.values(data || {});
@@ -23,11 +24,9 @@ const TeamMember = ({ userId, searchValue }: TeamMemberProps) => {
     navigate(`/user/${userId}`, { state: { user: data } });
   }
 
-  console.log(searchExists, searchValue, values);
-
   if (isLoading || !data) return <Spinner />;
   if (!searchExists && searchValue) return null;
-  return <UserCard user={data} onRequestUserNavigate={handleNavigation} />;
+  return <UserCard user={data} isLead={isLead} onRequestUserNavigate={handleNavigation} />;
 };
 
 export const TeamOverview = () => {
@@ -55,7 +54,7 @@ export const TeamOverview = () => {
       onSearchButtonClick={setSearchValue}
       initialSearchValue={searchValue || undefined}
     >
-      {teamLead && <TeamMember userId={teamLead} searchValue={searchValue} />}
+      {teamLead && <TeamMember isLead userId={teamLead} searchValue={searchValue} />}
       {teamMembers && (
         <CardList isLoading={false}>
           {teamMembers.map((userId) => (

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 
+import { Team } from '@/@types';
 import { useTeams } from '@/api/getTeams';
 import { Card } from '@/components/Card';
 import { CardList } from '@/components/CardList';
 import { Layout } from '@/components/Layout';
 import { useSearch } from '@/hooks/useSearch';
-import { Team } from '@/types';
 
 export const Teams = () => {
   const { data, isLoading } = useTeams();

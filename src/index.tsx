@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Normalize } from './styles';
+import { GlobalStyles, Normalize } from './styles';
 
 if (process.env.NODE_ENV === 'development') {
   // Disabled to follow MSW docs: https://mswjs.io/docs/getting-started/integrate/browser
@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'development') {
 ReactDOM.render(
   <React.StrictMode>
     <Normalize />
+    <GlobalStyles />
     <App />
   </React.StrictMode>,
   document.getElementById('root')

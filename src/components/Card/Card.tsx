@@ -23,7 +23,7 @@ export const Card = ({ columns, values, onNavigationRequest }: CardProps) => {
 
         if (typeof columns[key] === 'string')
           return (
-            <div key={value}>
+            <div key={value} className="row">
               <h3>{columns[key]}</h3>&nbsp;<p>{value}</p>
             </div>
           );

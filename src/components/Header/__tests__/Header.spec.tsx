@@ -15,10 +15,10 @@ describe('<Header />', () => {
     expect(screen.getByRole('button', { name: 'Go back' })).toBeVisible();
   });
 
-  it('should not render back button in header', () => {
+  it('should not enable back button in header', () => {
     render(<Header title="Header" />);
 
-    expect(screen.queryByRole('button', { name: 'Go back' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Go back' })).toBeDisabled();
   });
 
   it('should navigate back when back button is clicked', () => {

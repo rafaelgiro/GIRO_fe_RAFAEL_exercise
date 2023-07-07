@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/api';
 import { ExtractFnReturnType, QueryConfig } from '@/api/react-query';
 
-import { Team } from '../types';
+import { Team } from '../@types';
 
 export const getTeams = (): Promise<Team[]> => {
   return api('/teams');
