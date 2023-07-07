@@ -3,11 +3,28 @@ import { useMemo } from 'react';
 import { CardContainer } from './styles';
 
 type CardProps = {
+  /**
+   * The mapping of column keys to column labels.
+   */
   columns: Record<string, string>;
+  /**
+   * The mapping of column keys to corresponding values.
+   */
   values: Record<string, any>;
+  /**
+   * Optional event handler for card navigation requests.
+   */
   onNavigationRequest?: (item: CardProps['values']) => void;
 };
 
+/**
+ * Card component represents a card with dynamic columns and values.
+ * It can be used to display data in a structured format.
+ * @param columns - The mapping of column keys to column labels.
+ * @param values - The mapping of column keys to corresponding values.
+ * @param onNavigationRequest - Optional event handler for card navigation requests.
+ * @returns The rendered Card component.
+ */
 export const Card = ({ columns, values, onNavigationRequest }: CardProps) => {
   const data = useMemo(() => Object.entries(values), [values]);
 
