@@ -1,25 +1,12 @@
-import * as React from 'react';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import TeamOverview from './pages/TeamOverview';
-import Teams from './pages/Teams';
-import UserOverview from './pages/UserOverview';
+import { AppProvider } from './providers/app';
+import { AppRoutes } from './routes';
 
 const App = () => {
-    var router = createBrowserRouter([
-        {
-            path: '/',
-            element: <Teams />,
-        },
-        {
-            path: '/team/:teamId',
-            element: <TeamOverview />,
-        },
-        {
-            path: '/user/:useId',
-            element: <UserOverview />,
-        },
-    ]);
-    return <RouterProvider router={router} />;
+  return (
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
+  );
 };
 
 export default App;

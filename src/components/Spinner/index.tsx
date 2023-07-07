@@ -1,24 +1,10 @@
-import * as React from 'react';
-import styled, {keyframes} from 'styled-components';
+import { SpinnerBody } from './styles';
 
-const spinnerAnimation = keyframes`
-from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-`;
-
-const SpinnerBody = styled.div`
-    height: 4rem;
-    width: 4rem;
-    border: 4px solid #d1d5db;
-    border-top-color: #3b82f6;
-    border-radius: 50%;
-    animation: ${spinnerAnimation} 800ms linear infinite;
-`;
-
+/**
+ * Spinner component represents a loading spinner.
+ * It can be used to indicate that content is being loaded or processed.
+ * @returns The rendered Spinner component.
+ */
 export const Spinner = () => {
-    return <SpinnerBody data-testid="spinner" />;
+  return <SpinnerBody role="alert" aria-live="polite" aria-busy="true" />;
 };

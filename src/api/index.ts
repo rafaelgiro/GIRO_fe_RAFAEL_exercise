@@ -1,21 +1,25 @@
-import {Teams, TeamOverview, UserData} from 'types';
+import { API_URL } from '@/config';
 
-const getData = async (path = '') => {
-    const url = `${process.env.REACT_APP_API_BASE_URL}/${path}`;
-    const res = await fetch(url);
-    const json = await res.json();
+export async function api(path: string, options: RequestInit = {}): Promise<any> {
+  const defaultOptions: RequestInit = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-    return json;
-};
+  const fetchOptions: RequestInit = { ...defaultOptions, ...options };
 
-export const getTeams = (): Promise<Teams[]> => {
-    return getData('teams');
-};
+  try {
+    const response = await fetch(`${API_URL}${path}`, fetchOptions);
 
-export const getTeamOverview = (teamId: string): Promise<TeamOverview> => {
-    return getData(`teams/${teamId}`);
-};
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
 
-export const getUserData = (userId: string): Promise<UserData> => {
-    return getData(`users/${userId}`);
-};
+    return await response.json();
+  } catch (error) {
+    console.error('Request failed:', error);
+    throw error;
+  }
+}

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^4.29.19",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,21 +13,24 @@
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.10",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
-    "tsc-check": "tsc --noEmit",
-    "prettier": "prettier --config ./.prettierrc.json --write './**/*.{js,tsx,ts}'",
-    "prettier:check": "prettier --config ./.prettierrc.json --check './**/*.{js,tsx,ts}'",
-    "lint:check": "eslint 'src/**/*.{js,tsx,ts}' --max-warnings=0 --cache --cache-location /tmp/eslint-cache.json && npm run tsc-check && npm run prettier:check",
-    "lint:fix": "eslint 'src/**/*.{js,tsx,ts}' --fix"
+    "postinstall": "husky install",
+    "tsc-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
+    "format": "npm run prettier -- --write",
+    "check-format": "npm run prettier -- --list-different",
+    "validate": "npm-run-all --parallel tsc-check && lint-staged"
   },
   "eslintConfig": {
     "extends": [
@@ -47,23 +51,52 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@faker-js/faker": "^8.0.2",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint": "^8.31.0",
-    "eslint-plugin-import": "^2.27.4",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.4",
     "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-jest-dom": "^5.0.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-no-only-tests": "^3.1.0",
     "eslint-plugin-no-storage": "^1.0.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.9.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "msw": "^1.2.2",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.8.2",
+    "ts-jest": "^29.1.1",
     "typescript": "^4.9.4"
+  },
+  "lint-staged": {
+    "*.+(ts|tsx)": [
+      "npm run lint"
+    ]
+  },
+  "msw": {
+    "workerDirectory": "public"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.+)": "<rootDir>/src/$1"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/**/*.stories.{js,jsx,ts,tsx}",
+      "!src/test/**/*.{js,jsx,ts,tsx}"
+    ]
   }
 }
